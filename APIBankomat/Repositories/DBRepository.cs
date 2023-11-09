@@ -92,7 +92,7 @@ namespace APIBankomat.Repositories
         }
         #endregion
 
-        #region BANCHE
+        /*#region BANCHE
         public async Task<Banche?> UpdateUtenteAsync(string username, bool bloccato)
         {
             var utente = await _ctx.Banches
@@ -106,10 +106,11 @@ namespace APIBankomat.Repositories
 
             return utente;
         }
-
-
-
+        
 
         #endregion
+        */
+
+
     }
 }
