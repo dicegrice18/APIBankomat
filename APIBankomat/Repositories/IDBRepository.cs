@@ -19,9 +19,12 @@ namespace APIBankomat.Repositories
 
 
         #region BANCHE
-        //Task<IEnumerable<Banca>> GetBancheWithFunzionalitaAsync();
+        Task<IEnumerable<Banche>> GetBancheAsync();
 
         #endregion
+        Task<IEnumerable<Funzionalita>> GetBancheFunzionalitaByBancaByIdAsync(int idBanca);
+
+        Task<IEnumerable<Funzionalitum>> GetFunzionalitaAsync();
 
     }
 }

@@ -20,25 +20,12 @@ namespace APIBankomat.Controllers
         }
 
 
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Banca>>> GetBancheAsync()
-        //{
-        //    var banche = await _RepoDB.GetBancheAsync();
-        //    var bancheDTOs = new List<Banca>();
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Banche>>> GetClientisAsync()
+        {
+            IEnumerable<Banche> banche = await _RepoDB.GetBancheAsync();
 
-        //    foreach (var banca in banche)
-        //    {
-        //        var bancaDTO = new Banca
-        //        {
-        //            Id = banca.Id,
-        //            Nome = banca.Nome,
-        //            BancheFunzionalita = banca.BancheFunzionalita.Select(bf => bf.IdFunzionalitaNavigation.Nome).ToList()
-        //        };
-
-        //        bancheDTOs.Add(bancaDTO);
-        //    }
-
-        //    return Ok(bancheDTOs);
-        //}
+            return Ok(banche);
+        }
     }
 }

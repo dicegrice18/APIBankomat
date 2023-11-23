@@ -92,24 +92,43 @@ namespace APIBankomat.Repositories
         }
         #endregion
 
-        /*#region BANCHE
-        public async Task<Banche?> UpdateUtenteAsync(string username, bool bloccato)
+        #region BANCHE
+
+        public async Task<IEnumerable<Banche>> GetBancheAsync()
         {
-            var utente = await _ctx.Banches
-                .FirstOrDefaultAsync(u => u.NomeUtente == username);
-
-            if (utente != null)
-            {
-                utente.Bloccato = bloccato;
-                await _context.SaveChangesAsync();
-            }
-
-            return utente;
+            var banca = await _ctx.Banches.ToListAsync();
+            return banca;
         }
-        
+
+        public async Task<IEnumerable<Funzionalita>> GetBancheFunzionalitaByBancaByIdAsync(int idBanca)
+        {
+            var funzionalita = await _ctx.BancheFunzionalita
+                .Where(bf => bf.IdBanca == idBanca)
+                .Join(
+                    _ctx.Funzionalita,  // Assuming Funzionalita is the related table
+                    bf => bf.IdFunzionalita,
+                    f => f.Id,
+                    (bf, f) => new Funzionalita
+                    {
+                        Id = bf.IdFunzionalita,
+                        Nome = f.Nome  // Replace with the actual property for the name in the Funzionalita class
+                    }
+                )
+                .ToListAsync();  // Assuming you want to return a list, use ToListAsync
+
+            return funzionalita;
+        }
+
+        public async Task<IEnumerable<Funzionalitum>> GetFunzionalitaAsync()
+        {
+            return await _ctx.Funzionalita.OrderBy(c => c.Id).ToListAsync();
+
+        }
+
+
 
         #endregion
-        */
+
 
 
     }

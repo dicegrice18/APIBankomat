@@ -50,15 +50,24 @@ namespace APIBankomat.Controllers
         {
             await _RepoDB.UpdateUtenteAsync(id, bloccato);
 
-            return Ok("User updated successfully.");
+            return Ok(new { message = "User modified successfully." });
         }
 
         [HttpPut("password/{id}")]
-        public async Task<IActionResult> UpdateNewPasswordAsync(long id, string password)
+        public async Task<IActionResult> UpdateNewPasswordAsync(int id, string password)
         {
+            // Recupera lo stato dell'utente dal tuo repository o database
+            var user = await _RepoDB.GetUtentiByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound($"User with ID {id} not found.");
+            }
+
+
             await _RepoDB.UpdatePasswordAsync(id, password);
 
-            return Ok("Password updated successfully.");
+            return Ok(new { message = "Password updated successfully." });
         }
 
 
@@ -69,9 +78,9 @@ namespace APIBankomat.Controllers
             {
                 var ris = await _RepoDB.AddUtenteAsync(utente);
                 
-                return Ok("User added successfully with ID: " + ris); 
+                return Ok(new { message = "User added successfully with ID: " + ris }); 
             }
-            return BadRequest(ModelState);
+            return BadRequest(new { error = ModelState });
         }
 
         [HttpDelete("{id}")]
@@ -81,12 +90,12 @@ namespace APIBankomat.Controllers
             {
                 await _RepoDB.DeleteUtenteAsync(id);
 
-                return Ok("User deleted successfully.");
+                // Restituisci un oggetto JSON vuoto con uno stato di successo
+                return Ok(new { message = "User deleted successfully." });
             }
             catch (Exception ex)
             {
-
-                return NotFound($"Error deleting the user: {ex.Message}");
+                return NotFound(new { error = $"Error deleting the user: {ex.Message}" });
             }
         }
 
